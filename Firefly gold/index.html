@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 核心：优化移动端视口，支持横屏适配 -->
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.5, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>萤鳏Bullion Butler</title>
+    <script src="./firefly/firefly.config.js"></script>
+    <link rel="stylesheet" href="./firefly/firefly.css">
+</head>
+<body>
+    <!-- 新增：横屏提示层 -->
+    <div class="landscape-tip" id="landscapeTip">
+        <div class="tip-content">
+            <div class="tip-icon">📱</div>
+            <div class="tip-text">请切换至<b>横屏模式</b>以获得最佳体验</div>
+            <div class="tip-subtext">（旋转手机/开启自动旋转）</div>
+        </div>
+    </div>
+
+    <button id="backToTop">↑</button>
+
+    <div class="core-container">
+        <div class="title-container">
+            <img src="./firefly/firefly-logo.png" alt="logo" class="title-logo">
+            <h1>萤鳏Bullion Butler</h1>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stats-top">
+                <div class="stats-gold">
+                    <span class="gold-label">总金条：</span>
+                    <span class="gold-value" id="totalGold">0</span>
+                </div>
+                <div class="stats-right">
+                    <div class="stats-item">
+                        <div class="stats-label">总任务完成度</div>
+                        <div class="stats-value rate" id="totalTaskRate">0%</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">全任务完成角色数</div>
+                        <div class="stats-value count" id="totalCompletedCount">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">每日任务完成度</div>
+                        <div class="stats-value rate" id="dailyTaskRate">0%</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">每日任务完成数</div>
+                        <div class="stats-value count" id="dailyCompletedCount">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">周任务完成度</div>
+                        <div class="stats-value rate" id="weeklyTaskRate">0%</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">周任务完成数</div>
+                        <div class="stats-value count" id="weeklyCompletedCount">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-bottom">
+                <div class="stats-buttons">
+                    <button class="btn btn-primary" id="addAccountBtn">+ 添加账号</button>
+                    <button class="btn btn-success" id="exportDataBtn">导出数据备份</button>
+                    <button class="btn btn-warning" id="importDataBtn">导入数据备份</button>
+                    <input type="file" id="importFile" accept=".json">
+                </div>
+                <div class="stats-countdown-group">
+                    <div class="stats-countdown daily-countdown">
+                        <div class="countdown-label">每日重置</div>
+                        <div class="countdown-value" id="dailyCountdown">00:00:00</div>
+                    </div>
+                    <div class="stats-countdown weekly-countdown">
+                        <div class="countdown-label">每周重置</div>
+                        <div class="countdown-value" id="weeklyCountdown">0天00:00:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="function-bar">
+            <div class="global-search">
+                <input type="text" id="searchInput" placeholder="搜索角色/区服/账号ID">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            
+            <div class="birdview-buttons" id="birdviewBtns">
+                <button class="btn-birdview" data-task="dailyNormal">普通</button>
+                <button class="btn-birdview" data-task="dailyFa">讨伐</button>
+                <button class="btn-birdview" data-task="lanChao">蓝潮</button>
+                <button class="btn-birdview" data-task="xunLuo">巡逻</button>
+                <button class="btn-birdview" data-task="fishing">钓鱼</button>
+                <button class="btn-birdview" data-task="weekly">周本</button>
+            </div>
+
+            <div class="filter-sort-group">
+                <select class="id-filter-select" id="idFilter">
+                    <option value="all">全部账号</option>
+                </select>
+                <button class="btn btn-primary" id="sortGoldAsc">↑ 金条</button>
+                <button class="btn btn-primary" id="sortGoldDesc">↓ 金条</button>
+                <button class="btn btn-primary" id="sortId">ID排序</button>
+            </div>
+        </div>
+
+        <div class="birdview-modal" id="birdviewModal">
+            <div class="birdview-header">
+                <h3 id="birdviewTitle">普通任务 - 鸟瞰视图</h3>
+                <button class="btn-close" id="closeBirdviewBtn">×</button>
+            </div>
+            <div class="birdview-content" id="birdviewContent">
+            </div>
+        </div>
+
+        <div class="accounts-container" id="accountsContainer"></div>
+    </div>
+
+    <script src="./firefly/firefly.js"></script>
+</body>
+</html>
